@@ -12,7 +12,7 @@
 # - INPUT_SHELL_NAME
 # - INPUT_VOLUMES
 #
-set -euo pipefail
+set -euox pipefail
 
 readonly SCRIPT_PATH=$(readlink -f "$0")
 readonly SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
