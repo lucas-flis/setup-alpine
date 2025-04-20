@@ -17,7 +17,7 @@ set -euox pipefail
 readonly SCRIPT_PATH=$(readlink -f "$0")
 readonly SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 
-readonly ALPINE_BASE_PKGS='alpine-baselayout apk-tools busybox busybox-suid musl-utils doas'
+readonly ALPINE_BASE_PKGS='alpine-baselayout apk-tools busybox busybox-suid musl-utils doas abuild'
 readonly RUNNER_HOME="/home/$SUDO_USER"
 readonly ROOTFS_BASE_DIR="$RUNNER_HOME/rootfs"
 
@@ -325,6 +325,7 @@ group "Set up user $SUDO_USER"
 cat > .setup.sh <<-SHELL
 	echo '▷ Creating user $SUDO_USER with uid ${SUDO_UID:-1000}'
 	adduser -u '${SUDO_UID:-1000}' -G users -s /bin/sh -D '$SUDO_USER'
+	addgroup $SUDO_USER abuild
 
 	if [ -d /etc/sudoers.d ]; then
 		echo '▷ Adding sudo rule:'
