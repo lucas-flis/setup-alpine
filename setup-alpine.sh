@@ -327,6 +327,11 @@ cat > .setup.sh <<-SHELL
 	adduser -u '${SUDO_UID:-1000}' -G users -s /bin/sh -D '$SUDO_USER'
 	addgroup $SUDO_USER abuild
 
+	mkdir -p /var/cache/distfiles
+	chmod a+w /var/cache/distfiles
+	chgrp abuild /var/cache/distfiles
+	chmod g+w /var/cache/distfiles
+
 	if [ -d /etc/sudoers.d ]; then
 		echo '▷ Adding sudo rule:'
 		echo '$SUDO_USER ALL=(ALL) NOPASSWD: ALL' | tee /etc/sudoers.d/root
